@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KDServer.WebSocket", "KDServer.WebSocket.csproj", "{25F4B856-2873-4D21-B2F2-C36970CD5080}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25F4B856-2873-4D21-B2F2-C36970CD5080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25F4B856-2873-4D21-B2F2-C36970CD5080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25F4B856-2873-4D21-B2F2-C36970CD5080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25F4B856-2873-4D21-B2F2-C36970CD5080}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32792653-4D8E-4ADB-BF1B-6DB56678DC8C}
+	EndGlobalSection
+EndGlobal
