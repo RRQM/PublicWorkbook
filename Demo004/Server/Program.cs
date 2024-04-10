@@ -18,7 +18,7 @@ namespace Server
             CreateHttpDmtpService(8002);
             while (true)
             {
-
+                Console.ReadKey();
             }
         }
         
