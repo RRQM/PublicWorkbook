@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TouchSocket.Core;
 using TouchSocket.Dmtp;
 using TouchSocket.Dmtp.Rpc;
@@ -13,7 +9,7 @@ namespace HttpClient
 {
     internal class Program
     {
-        static string id { get; set; }
+        private static string id { get; set; }
         public partial class MyRpcServer : RpcServer
         {
             [DmtpRpc(true)]
@@ -22,9 +18,9 @@ namespace HttpClient
                 Console.WriteLine($"{name},hi {id}");
             }
         }
-        static void Main(string[] args)
+
+        private static void Main(string[] args)
         {
-            id = args[0];
             var client = new HttpDmtpClient();
             client.Setup(new TouchSocketConfig()
                 .SetRemoteIPHost("127.0.0.1:8002")
@@ -44,12 +40,17 @@ namespace HttpClient
                     Id = id,
                     VerifyToken = "Dmtp"
                 }));
-            Result res = client.TryConnect();
+
+            var res = client.TryConnect();
+
+            id = client.Id;
+
             Console.WriteLine($"Connection {res.Message} - ID: {id}");
             while (true)
             {
-                string targetId = Console.ReadLine();
-                client.GetDmtpRpcActor().Invoke(targetId, "SayHello", InvokeOption.WaitInvoke, "李四");
+                var targetId = Console.ReadLine();
+                client.GetDmtpRpcActor().Invoke(targetId, "SayHello", InvokeOption.WaitInvoke, "Http协议");
+                Console.WriteLine("调用成功");
             }
         }
     }
