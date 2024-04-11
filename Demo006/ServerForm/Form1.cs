@@ -30,6 +30,7 @@ namespace ServerForm
         }
         private void InitService()
         {
+            //issue: https://gitee.com/RRQM_Home/TouchSocket/issues/I9FNC1
             if (rpcService is null)
             {
                 rpcService = new TcpDmtpService();

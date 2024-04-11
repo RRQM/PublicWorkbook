@@ -16,7 +16,9 @@ namespace ClientConsole
         static TcpDmtpClient client;
         // static  void Main(string[] args)
         public static void Main(string[] args)
-        { 
+        {
+            //issue: https://gitee.com/RRQM_Home/TouchSocket/issues/I9FNC1
+
             CreateClinetAsync();
             Console.ReadKey();
 
