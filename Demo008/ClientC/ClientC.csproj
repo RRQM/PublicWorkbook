@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="TouchSocket" Version="2.0.2" />
+    <PackageReference Include="TouchSocket.Core" Version="2.0.2" />
+    <PackageReference Include="TouchSocket.Dmtp" Version="2.0.2" />
+    <PackageReference Include="TouchSocket.Http" Version="2.0.2" />
+    <PackageReference Include="TouchSocket.NamedPipe" Version="2.0.2" />
+    <PackageReference Include="TouchSocket.Rpc" Version="2.0.2" />
+    <PackageReference Include="TouchSocketPro" Version="2.0.2" />
+    <PackageReference Include="TouchSocketPro.Dmtp" Version="2.0.2" />
+  </ItemGroup>
+</Project>
