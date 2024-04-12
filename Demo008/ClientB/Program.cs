@@ -20,7 +20,7 @@ namespace ClientB
         static string clientId { get; set; }
 
         static long m_idCounter;
-        
+
         public partial class MyRpcServer : RpcServer
         {
             [DmtpRpc(true)]
@@ -34,8 +34,12 @@ namespace ClientB
             }
         }
 
+        static Container m_container = new Container();
+
         static void Main(string[] args)
         {
+            //issue https://gitee.com/RRQM_Home/TouchSocket/issues/I9G1GD
+
             #region 企业版测试
             try
             {
@@ -55,7 +59,7 @@ namespace ClientB
             Console.WriteLine($"Connection {res.Message} - ID: {clientId}");
             while (true)
             {
-
+                Console.ReadKey();
             }
         }
 
@@ -64,12 +68,15 @@ namespace ClientB
             var client = new HttpDmtpClient();
             client.Setup(new TouchSocketConfig()
                 .SetRemoteIPHost($"127.0.0.1:{port}")
+                .SetRegistrator(m_container)
                 .ConfigureContainer(a =>
                 {
                     a.AddRpcStore(store =>
                     {
                         store.RegisterServer<MyRpcServer>();
                     });
+
+                    a.RegisterSingleton<IDmtpRouteService, MyDmtpRouteService>();
                 })
                 .ConfigurePlugins(a =>
                 {
@@ -87,10 +94,13 @@ namespace ClientB
         {
             var service = new NamedPipeDmtpService();
             var config = new TouchSocketConfig()//配置
+                   .SetRegistrator(m_container)
                    .SetPipeName(pipeName)//设置管道名称
                    .SetGetDefaultNewId(() => $"PipeDmtp-{Interlocked.Increment(ref m_idCounter)}")
                    .ConfigureContainer(a =>
                    {
+                       a.RegisterSingleton<INamedPipeDmtpService, NamedPipeDmtpService>();
+
                        a.AddConsoleLogger();
                    })
                    .ConfigurePlugins(a =>
@@ -104,6 +114,31 @@ namespace ClientB
 
             service.Setup(config);
             return service;
+        }
+    }
+
+    class MyDmtpRouteService : IDmtpRouteService
+    {
+        private readonly INamedPipeDmtpService m_namedPipeDmtpService;
+
+        public Func<string, Task<IDmtpActor>> FindDmtpActor { get ; set; }
+
+        public MyDmtpRouteService(INamedPipeDmtpService namedPipeDmtpService)
+        {
+            this.m_namedPipeDmtpService = namedPipeDmtpService;
+            this.FindDmtpActor = this.OnFindDmtpActor;
+        }
+
+        private async Task<IDmtpActor> OnFindDmtpActor(string id)
+        {
+            await Task.CompletedTask;
+
+            if (m_namedPipeDmtpService.TryGetSocketClient(id,out var socketClient))
+            {
+                return socketClient.DmtpActor;
+            }
+
+            return default;
         }
     }
 }

@@ -26,6 +26,8 @@ namespace ClientC
         }
         static void Main(string[] args)
         {
+            //issue https://gitee.com/RRQM_Home/TouchSocket/issues/I9G1GD
+
             #region 企业版测试
             try
             {
@@ -43,7 +45,7 @@ namespace ClientC
             Console.WriteLine($"Connection {res.Message} - ID: {clientId}");
             while (true)
             {
-
+                Console.ReadKey();
             }
         }
 

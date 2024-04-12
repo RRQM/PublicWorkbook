@@ -17,6 +17,8 @@ namespace ServerA
         static long m_idCounter;
         static void Main(string[] args)
         {
+            //issue https://gitee.com/RRQM_Home/TouchSocket/issues/I9G1GD
+
             #region 企业版测试
             try
             {
@@ -35,10 +37,10 @@ namespace ServerA
             {
                 Console.WriteLine("通过ClientB调用ClientC的DmtpRPC");
                 // BridgeClient Id: HttpDmtpClient的Id
-                Console.Write("BridgeClient Id:");   
+                Console.Write("BridgeClient Id:");
                 var clientId = Console.ReadLine();
                 // Target Id: NamedPipeDmtpClient的Id，能否不通过Bridge-Rpc只用一个TargetId对NamedPipeDmtpClient进行DmtpRpc调用
-                Console.Write("Target Id:");            
+                Console.Write("Target Id:");
                 var targetId = Console.ReadLine();
                 if (service.TryGetSocketClient(clientId, out var client))
                 {
