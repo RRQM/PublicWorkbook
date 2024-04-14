@@ -8,6 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            // issue https://gitee.com/RRQM_Home/TouchSocket/issues/I9GG05
             var client = new WebSocketClient();
             client.Setup(new TouchSocketConfig()
                 .SetRemoteIPHost("ws://127.0.0.1:8888")

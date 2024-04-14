@@ -18,9 +18,9 @@ namespace WebSocketTest
         {
             InitializeComponent();
 
-            
+            // issue https://gitee.com/RRQM_Home/TouchSocket/issues/I9GG05
 
-        
+
             FleckLog.Level = LogLevel.Debug;
             var allSockets = new List<IWebSocketConnection>();
           
