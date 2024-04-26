@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  <LangVersion>latest</LangVersion>
+	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="TouchSocket" Version="2.0.3" />
+    <PackageReference Include="TouchSocket.Core" Version="2.0.3" />
+    <PackageReference Include="TouchSocket.Dmtp" Version="2.0.3" />
+    <PackageReference Include="TouchSocket.Hosting" Version="2.0.3" />
+    <PackageReference Include="TouchSocket.Http" Version="2.0.3" />
+    <PackageReference Include="TouchSocket.Rpc" Version="2.0.3" />
+  </ItemGroup>
+</Project>
