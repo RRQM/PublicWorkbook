@@ -24,12 +24,14 @@ namespace ConsoleApp1
                     fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data");
                     content.Add(fileContent, "\"file\"", "\"中文.txt\"");
 
-                    var response =await client.PostAsync("http://127.0.0.1:7789/file", content);
+                    var response = await client.PostAsync("http://127.0.0.1:7789/file", content);
                     response.EnsureSuccessStatusCode();
 
                     Console.WriteLine(await response.Content.ReadAsStringAsync());
                 }
             }
+
+            Console.ReadKey();
         }
 
         static HttpService GetService()
@@ -72,8 +74,10 @@ namespace ConsoleApp1
                     }
 
                     await e.Context.Response
-               .SetStatus()
-               .AnswerAsync();
+                        .FromText("ok")
+                        .SetStatus()
+                        .AnswerAsync();
+                    return;
                 }
                 catch (Exception ex)
                 {
