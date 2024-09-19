@@ -1,3 +1,5 @@
+using TouchSocket.Core;
+
 namespace TouchSocketTestApp
 {
     internal static class Program

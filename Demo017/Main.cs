@@ -16,11 +16,11 @@ namespace TouchSocketTestApp
         private void btn_Start_Click(object sender, EventArgs e)
         {
             Clients = new ConcurrentList<TcpClient>();
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 for (int i = 0; i < 500; i++)
                 {
-                    var cli = CreateClient("127.0.0.1", "7789");
+                    var cli = await CreateClientAsync("127.0.0.1", "7789");
                     Clients.Add(cli);
                 }
 
@@ -28,7 +28,7 @@ namespace TouchSocketTestApp
                 {
                     foreach (var c in Clients)
                     {
-                        _ = c.TryConnectAsync();
+                        await c.TryConnectAsync();
                     }
                 }
             });
@@ -53,22 +53,22 @@ namespace TouchSocketTestApp
         /// <param name="IP"></param>
         /// <param name="Port"></param>
         /// <returns></returns>
-        private TcpClient CreateClient(string IP, string Port)
+        private async Task<TcpClient> CreateClientAsync(string IP, string Port)
         {
             var tcpClient = new TcpClient();
 
             //载入配置
-            tcpClient.Setup(new TouchSocketConfig()
-                  .SetRemoteIPHost($"{IP}:{Port}")
-                  .ConfigureContainer(a =>
-                  {
-                      a.AddConsoleLogger();
-                  })
-                  .ConfigurePlugins(a =>
-                  {
-                      a.UseTcpReconnection();
-                  })
-                  );
+            await tcpClient.SetupAsync(new TouchSocketConfig()
+                   .SetRemoteIPHost($"{IP}:{Port}")
+                   .ConfigureContainer(a =>
+                   {
+                       a.AddConsoleLogger();
+                   })
+                   .ConfigurePlugins(a =>
+                   {
+                       a.UseTcpReconnection();
+                   })
+                   );
 
 
             tcpClient.Logger.Info("客户端成功连接");
