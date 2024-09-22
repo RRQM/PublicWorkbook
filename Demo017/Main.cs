@@ -16,26 +16,22 @@ namespace TouchSocketTestApp
         private void btn_Start_Click(object sender, EventArgs e)
         {
             Clients = new ConcurrentList<TcpClient>();
-
-            for (int j = 0; j < 10; j++)
+            Task.Run(async () =>
             {
-                Task.Run(async () =>
+                for (int i = 0; i < 500; i++)
                 {
-                    for (int i = 0; i < 50; i++)
-                    {
-                        var cli = await CreateClientAsync("127.0.0.1", "7789");
-                        Clients.Add(cli);
-                    }
+                    var cli = await CreateClientAsync("127.0.0.1", "7789");
+                    Clients.Add(cli);
+                }
 
-                    if (Clients.Count > 0)
+                if (Clients.Count > 0)
+                {
+                    foreach (var c in Clients)
                     {
-                        foreach (var c in Clients)
-                        {
-                            await c.TryConnectAsync();
-                        }
+                        await c.TryConnectAsync();
                     }
-                });
-            }
+                }
+            });
         }
 
         private async void btn_End_ClickAsync(object sender, EventArgs e)
