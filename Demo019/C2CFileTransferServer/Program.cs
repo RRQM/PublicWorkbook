@@ -4,6 +4,7 @@ using TouchSocket.Dmtp;
 using TouchSocket.Dmtp.FileTransfer;
 using TouchSocket.Sockets;
 using TouchSocket.Rpc;
+using C2CFileTransferClient;
 
 namespace C2CFileTransferServer
 {
@@ -27,8 +28,8 @@ namespace C2CFileTransferServer
                    {
                        a.UseDmtpFileTransfer();//必须添加文件传输插件
                        a.UseDmtpRpc();
-                       //a.Add<MyFileTransferPermitionPlugin>();
-                       //a.Add<MyFileTransferRoutPermitPlugin>();
+                       
+                       a.Add<MyFileTransferRoutPermitPlugin>();
                    })
                    .SetDmtpOption(new DmtpOption()
                    {
@@ -47,7 +48,7 @@ namespace C2CFileTransferServer
                 var str = Console.ReadLine();
                 if (service.TryGetClient(str.Split(' ')[0], out var socketClient))
                 {
-                    var result = socketClient.GetDmtpRpcActor().InvokeT<bool>("Notice", DmtpInvokeOption.WaitInvoke, str.Split(' ')[1]);
+                    var result =await socketClient.GetDmtpRpcActor().InvokeTAsync<bool>("Notice", DmtpInvokeOption.WaitInvoke, str.Split(' ')[1]);
                     service.Logger.Info($"调用结果{result}");
                 }
             }

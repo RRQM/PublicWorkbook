@@ -12,6 +12,7 @@ namespace C2CFileTransferClient
     {
         public async Task OnDmtpRouting(IDmtpActorObject client, PackageRouterEventArgs e)
         {
+            Console.WriteLine(e.RouterType);
             e.IsPermitOperation = true;//允许路由
             await e.InvokeNext();
         }

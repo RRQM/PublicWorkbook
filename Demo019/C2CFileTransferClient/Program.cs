@@ -22,7 +22,6 @@ namespace C2CFileTransferClient
                      {
                          store.RegisterServer<MyClientRpcServer>();
                      });
-                     a.AddDmtpRouteService();//添加路由策略
                  })
                  .ConfigurePlugins(a =>
                  {
@@ -32,7 +31,7 @@ namespace C2CFileTransferClient
                      .SetTick(TimeSpan.FromSeconds(3))
                      .SetMaxFailCount(3);
                      a.Add<MyFileTransferPermitionPlugin>();
-                     a.Add<MyFileTransferRoutPermitPlugin>();
+                    
                  })
                  .SetRemoteIPHost("127.0.0.1:8808")
                  .SetDmtpOption(new DmtpOption()
@@ -42,8 +41,8 @@ namespace C2CFileTransferClient
                  }));
             await client.ConnectAsync();
             client.Logger.Info($"连接成功，Id={client.Id}");
-            bool loginResult = (bool)client.GetDmtpRpcActor().Invoke("Login", typeof(bool), InvokeOption.WaitInvoke, "123", "abc");
-            Console.WriteLine(loginResult);
+            //bool loginResult = (bool)client.GetDmtpRpcActor().Invoke("Login", typeof(bool), InvokeOption.WaitInvoke, "123", "abc");
+            //Console.WriteLine(loginResult);
 
 
             while (true)
@@ -55,8 +54,8 @@ namespace C2CFileTransferClient
                 if (arr.Length == 1)
                 {
                     var targetId = arr[0];
-                    var filePath = "d:\\百通-440x297-300冰白-双面彩色打印-6份.pdf";
-                    var saveFilePath = "c:\\out\\百通-440x297-300冰白-双面彩色打印-6份.pdf";
+                    var filePath = "C:\\Users\\17516\\Desktop\\新建文件夹\\1.txt";
+                    var saveFilePath = "C:\\Users\\17516\\Desktop\\新建文件夹\\2.txt";
                     var metadata = new Metadata();//传递到服务器的元数据
                     metadata.Add("1", "1");
                     metadata.Add("2", "2");
@@ -72,16 +71,16 @@ namespace C2CFileTransferClient
                     //此处的作用相当于Timer，定时每秒输出当前的传输进度和速度。
                     var loopAction = LoopAction.CreateLoopAction(-1, 1000, (loop) =>
                     {
-                        if (fileOperator.Result.ResultCode != ResultCode.Default)
+                        if (fileOperator.IsEnd)
                         {
                             loop.Dispose();
                         }
                         client.Logger.Info($"进度：{fileOperator.Progress}，速度：{fileOperator.Speed()}");
                     });
 
-                    loopAction.RunAsync();
+                    _=loopAction.RunAsync();
                     //此方法会阻塞，直到传输结束，也可以使用PushFileAsync
-                    IResult result = client.GetDmtpFileTransferActor().PushFile(targetId, fileOperator);
+                    IResult result =await client.GetDmtpFileTransferActor().PushFileAsync(targetId, fileOperator);
                     Console.WriteLine(result.Message);
                 }
             }
