@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+	  <LangVersion>preview</LangVersion>
+	  <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\TouchSocket.Dmtp\TouchSocket.Dmtp.csproj" />
+    <ProjectReference Include="..\..\Src\TouchSocket.Rpc\TouchSocket.Rpc.csproj" />
+  </ItemGroup>
+
+</Project>
